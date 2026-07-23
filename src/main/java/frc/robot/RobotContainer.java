@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.PaddleSubsystem;
 
 public class RobotContainer {
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
@@ -35,9 +36,11 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+    public final PaddleSubsystem paddle = new PaddleSubsystem();
 
     public RobotContainer() {
         configureBindings();
+        configurePaddleBindings();
     }
 
     private void configureBindings() {
@@ -77,6 +80,11 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
+    public void configurePaddleBindings() {
+        joystick.povUp().whileTrue(getPaddleCommand(true));
+        joystick.povDown().whileTrue(getPaddleCommand(false));
+    }
+
     public Command getAutonomousCommand() {
         // Simple drive forward auton
         final var idle = new SwerveRequest.Idle();
@@ -94,5 +102,13 @@ public class RobotContainer {
             // Finally idle for the rest of auton
             drivetrain.applyRequest(() -> idle)
         );
+    }
+
+    public Command getPaddleCommand(boolean testicle) {
+        if (testicle) {
+            return Commands.run(paddle::pivotMotorRun);
+        } else{
+            return Commands.run(paddle::pivotMotorRunBack);
+        }
     }
 }
