@@ -6,7 +6,7 @@ package frc.robot.generated;
 
 /** Add your docs here. */
 public class MechanismConstants {
-    public static final class Elevator {
+    public static final class Paddle {
         // Paddle Motor ID
         public static final int PADDLE_MOTOR_ID = 0;
         // PID Constants
