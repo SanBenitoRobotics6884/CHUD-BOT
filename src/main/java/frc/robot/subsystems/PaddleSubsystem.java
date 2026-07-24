@@ -6,9 +6,13 @@ package frc.robot.subsystems;
 
 import org.ejml.dense.block.MatrixOps_DDRB;
 
+import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.units.measure.Angle;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 import static frc.robot.generated.MechanismConstants.Paddle.*;
@@ -19,12 +23,14 @@ public class PaddleSubsystem extends SubsystemBase {
 
   /** Creates a new PaddleSubsystem. */
   public PaddleSubsystem() {
-
+    pivotConfigs();
     m_pivotMotor.getConfigurator().apply(m_pivotConfig);
   }
 
   @Override
   public void periodic() { 
+    System.out.println("Rotor: "+ pivotRotorPosition());
+    System.out.println("Motor: " + pivotMotorPosition());
     // This method will be called once per scheduler run
   }
 
@@ -40,15 +46,23 @@ public class PaddleSubsystem extends SubsystemBase {
     m_pivotMotor.stopMotor();
   }
 
-  public void pivotRotorPosition() {
-    m_pivotMotor.getRotorPosition();
+  /*Returns rotations of internal shaft */
+  public StatusSignal<Angle> pivotRotorPosition() {
+    return m_pivotMotor.getRotorPosition();
+  }
+
+  public StatusSignal<Angle> pivotMotorPosition() {
+    return m_pivotMotor.getPosition();
   }
 
   public void pivotConfigs() {
     m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
     m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
 
-    m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 128;
-    m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 128;
+    // Units: Rotations
+    m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 64;
+    m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 64;
+
+    m_pivotConfig.Feedback.SensorToMechanismRatio = 1/64;
   }
 }
