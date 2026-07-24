@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "different left to middle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "middle-left to right-middle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "right-middle to left-middle"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "left-middle to middle-right"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
