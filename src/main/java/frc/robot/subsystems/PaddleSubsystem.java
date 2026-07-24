@@ -63,6 +63,6 @@ public class PaddleSubsystem extends SubsystemBase {
     m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 64;
     m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 64;
 
-    m_pivotConfig.Feedback.SensorToMechanismRatio = 1/64;
+    m_pivotConfig.Feedback.SensorToMechanismRatio = 64;
   }
 }
