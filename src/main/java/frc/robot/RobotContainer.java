@@ -12,6 +12,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
@@ -81,8 +82,8 @@ public class RobotContainer {
     }
 
     public void configurePaddleBindings() {
-        joystick.povUp().whileTrue(getPaddleCommand(true));
-        joystick.povDown().whileTrue(getPaddleCommand(false));
+        joystick.rightTrigger().whileTrue(getPaddleBlockCommand());
+        joystick.leftTrigger().whileTrue(getPaddleStowCommand());
     }
 
     public Command getAutonomousCommand() {
@@ -104,11 +105,13 @@ public class RobotContainer {
         );
     }
 
-    public Command getPaddleCommand(boolean testicle) {
-        if (testicle) {
-            return Commands.run(paddle::pivotMotorRun);
-        } else{
-            return Commands.run(paddle::pivotMotorRunBack);
-        }
+    public Command getPaddleBlockCommand() {
+        return Commands.run(paddle::pivotMotorRun)
+            .finallyDo(paddle::pivotMotorStop);
+    }
+
+    public Command getPaddleStowCommand() {
+        return Commands.run(paddle::pivotMotorRunBack)
+            .finallyDo(paddle::pivotMotorStop);
     }
 }

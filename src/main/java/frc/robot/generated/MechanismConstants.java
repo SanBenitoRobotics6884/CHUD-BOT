@@ -8,7 +8,7 @@ package frc.robot.generated;
 public class MechanismConstants {
     public static final class Paddle {
         // Paddle Motor ID
-        public static final int PADDLE_MOTOR_ID = 0;
+        public static final int PADDLE_MOTOR_ID = 34;
         // PID Constants
         public static final double PADDLE_kP = 0;
         public static final double PADDLE_kI = 0;

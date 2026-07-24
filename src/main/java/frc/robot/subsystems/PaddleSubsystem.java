@@ -31,15 +31,18 @@ public class PaddleSubsystem extends SubsystemBase {
   public void periodic() { 
     System.out.println("Rotor: "+ pivotRotorPosition());
     System.out.println("Motor: " + pivotMotorPosition());
+    
     // This method will be called once per scheduler run
   }
 
   public void pivotMotorRun() {
-    m_pivotMotor.set(0.5);
+    System.out.println("Deploying");
+    m_pivotMotor.set(0.25);
   }
 
   public void pivotMotorRunBack() {
-    m_pivotMotor.set(-0.5);
+    System.out.println("Stowing");
+    m_pivotMotor.set(-0.1);
   }
 
   public void pivotMotorStop() {
@@ -60,8 +63,8 @@ public class PaddleSubsystem extends SubsystemBase {
     m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
 
     // Units: Rotations
-    m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 64;
-    m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = 64;
+    m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 10;
+    m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -0.01;
 
     m_pivotConfig.Feedback.SensorToMechanismRatio = 64;
   }
