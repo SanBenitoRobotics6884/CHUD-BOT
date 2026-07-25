@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import org.ejml.dense.block.MatrixOps_DDRB;
 
 import com.ctre.phoenix6.StatusSignal;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
 
@@ -19,7 +20,7 @@ import static frc.robot.generated.MechanismConstants.Paddle.*;
 
 public class PaddleSubsystem extends SubsystemBase {
   TalonFX m_pivotMotor = new TalonFX(PADDLE_MOTOR_ID);
-  TalonFXConfiguration m_pivotConfig = new TalonFXConfiguration();
+  TalonFXConfiguration m_pivotConfig = new TalonFXConfiguration().withCurrentLimits(new CurrentLimitsConfigs().withStatorCurrentLimit(40));
 
   /** Creates a new PaddleSubsystem. */
   public PaddleSubsystem() {
@@ -31,18 +32,16 @@ public class PaddleSubsystem extends SubsystemBase {
   public void periodic() { 
     System.out.println("Rotor: "+ pivotRotorPosition());
     System.out.println("Motor: " + pivotMotorPosition());
-    
+
     // This method will be called once per scheduler run
   }
 
   public void pivotMotorRun() {
-    System.out.println("Deploying");
-    m_pivotMotor.set(0.25);
+    m_pivotMotor.set(0.2);
   }
 
   public void pivotMotorRunBack() {
-    System.out.println("Stowing");
-    m_pivotMotor.set(-0.1);
+    m_pivotMotor.set(-0.2);
   }
 
   public void pivotMotorStop() {
@@ -59,12 +58,12 @@ public class PaddleSubsystem extends SubsystemBase {
   }
 
   public void pivotConfigs() {
-    m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-    m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
+    // m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
+    // m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
 
     // Units: Rotations
-    m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 10;
-    m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -0.01;
+    // m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 10;
+    // m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -0.01;
 
     m_pivotConfig.Feedback.SensorToMechanismRatio = 64;
   }
