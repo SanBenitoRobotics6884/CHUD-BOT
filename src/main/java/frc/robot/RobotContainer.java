@@ -106,9 +106,9 @@ public class RobotContainer {
 
     public Command getPaddleCommand(boolean testicle) {
         if (testicle) {
-            return Commands.run(paddle::pivotMotorRun);
+            return Commands.run(paddle::pivotMotorRun).finallyDo(() -> paddle.pivotMotorStop());
         } else{
-            return Commands.run(paddle::pivotMotorRunBack);
+            return Commands.run(paddle::pivotMotorRunBack).finallyDo(() -> paddle.pivotMotorStop());
         }
     }
 }
