@@ -124,5 +124,5 @@ public class RobotContainer {
     public Command getPaddleStowCommand() {
         return Commands.run(paddle::pivotMotorRunBack)
             .finallyDo(paddle::pivotMotorStop);
-    }
+
 }
