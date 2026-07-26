@@ -24,7 +24,8 @@ import frc.robot.subsystems.PaddleSubsystem;
 public class RobotContainer {
     private double MaxSpeed = 1.0 * TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
     private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
-
+    private double SlowSpeed = 0.5;
+    private double SlowAngularRate = RotationsPerSecond.of(0.325).in(RadiansPerSecond);
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -53,6 +54,16 @@ public class RobotContainer {
                 drive.withVelocityX(-joystick.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-joystick.getLeftX() * MaxSpeed) // Drive left with negative X (left)
                     .withRotationalRate(-joystick.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            )
+        );
+
+        // Taken directly from Pluto's code, I really like the comments here lol
+        // Removed and/or fixed a little bit of code that pretty much did nothing
+        joystick.leftBumper().whileTrue(
+            drivetrain.applyRequest(() -> 
+                drive.withVelocityX(-joystick.getLeftY() * SlowSpeed) // Conley should play pressure with Jerry.
+                    .withVelocityY(-joystick.getLeftX() * SlowSpeed)
+                    .withRotationalRate(-joystick.getRightX() * SlowAngularRate) // JERRY IS A FAT GAY CHUD!
             )
         );
 
