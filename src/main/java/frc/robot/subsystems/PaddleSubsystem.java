@@ -58,13 +58,6 @@ public class PaddleSubsystem extends SubsystemBase {
   }
 
   public void pivotConfigs() {
-    // m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitEnable = true;
-    // m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitEnable = true;
-
-    // Units: Rotations
-    // m_pivotConfig.SoftwareLimitSwitch.ForwardSoftLimitThreshold = 10;
-    // m_pivotConfig.SoftwareLimitSwitch.ReverseSoftLimitThreshold = -0.01;
-
     m_pivotConfig.Feedback.SensorToMechanismRatio = 64;
   }
 }
